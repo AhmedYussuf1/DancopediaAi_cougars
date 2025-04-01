@@ -85,7 +85,6 @@ We implemented a ChatGPT-powered chatbot that allows users to request informatio
 We welcome feedback and contributions from the community to improve DancopediaAi. If you have suggestions, feature requests, or would like to contribute to the project, please reach out to us via the project's GitHub repository or contact the maintainers directly.
 Special thanks to the open-source community and contributors for their support and resources.  
  
-  
   ## Screen shots of the project: 
   **home page:**
 ![alt "Screen shots of the home page "](/images_read_me_page/home.png)
