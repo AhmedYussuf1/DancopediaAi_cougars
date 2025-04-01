@@ -1,0 +1,29 @@
+ /* Custom Styles */
+ body {
+     font-family: 'Arial', sans-serif;
+ }
+
+ .main-content {
+     margin-top: 30px;
+ }
+
+ .dance-card {
+     border: 1px;
+     border-radius: 8px;
+     overflow: hidden;
+ }
+
+ .dance-card img {
+     width: 100%;
+     height: 250px;
+     object-fit: cover;
+ }
+
+ .dance-card-body {
+     padding: 20px;
+ }
+
+ .dance-card-body h5 {
+     font-size: 1.5rem;
+     font-weight: bold;
+ }
