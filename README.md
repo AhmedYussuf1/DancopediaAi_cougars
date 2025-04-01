@@ -1,9 +1,9 @@
-
+ 
  # Description:
    **name:** Dancopedia_AI\n
    **What the Project Deos:**:
    
-
+ 
 ## Project Description:
 DancopediaAi is a web-based platform designed to provide users with comprehensive information about various dance styles, techniques, and histories. The project aims to serve as an educational resource for dance enthusiasts, students, and professionals. It features an intuitive interface, multimedia content, and a search functionality to explore dance-related topics efficiently. 
 ### Problem Statement:
@@ -84,7 +84,7 @@ We implemented a ChatGPT-powered chatbot that allows users to request informatio
 ## Feedback and Contributions:
 We welcome feedback and contributions from the community to improve DancopediaAi. If you have suggestions, feature requests, or would like to contribute to the project, please reach out to us via the project's GitHub repository or contact the maintainers directly.
 Special thanks to the open-source community and contributors for their support and resources.  
-  
+ 
   ## Screen shots of the project: 
   **home page:**
 ![alt "Screen shots of the home page "](/images_read_me_page/home.png)
