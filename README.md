@@ -18,7 +18,7 @@ The project addresses the lack of a centralized, accessible, and engaging platfo
 ### Installation Steps:
 1. Copy the project folder `DancopediaAi_cougars` to the `htdocs` directory of your XAMPP installation.
   ```
-  /Applications/XAMPP/xamppfiles/htdocs/DancopediaAi_cougars
+  /XAMPP/xamppfiles/htdocs/DancopediaAi_cougars
   ```
 2. Start the XAMPP control panel and ensure that both Apache and MySQL services are running.
 3. Open your web browser and navigate to:
