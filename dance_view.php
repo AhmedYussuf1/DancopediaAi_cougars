@@ -52,8 +52,7 @@ function getRegion($conn){
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $region = $row["region"];
-            return "Region: $region";
+            return $row["region"];
         }
         else{
             echo 'No Video Found';
@@ -94,10 +93,13 @@ function getTitle($conn){
     <?php include('getTheme.php');?>
 </head>
 <body>
-<div class="container d-xxl-flex justify-content-xxl-center" style="height: 60vh; width: 80vw;"><iframe width="100%" height="100%" src="<?php echo getVideoLink($conn);?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></iframe></div>
+<div class="container d-xxl-flex justify-content-xxl-center my-4"><h1><?php echo getTitle($conn);?></h1></div>
+<div class="container d-xxl-flex justify-content-xxl-center mb-4" style="height: 60vh; width: 80vw;"><iframe width="100%" height="100%" src="<?php echo getVideoLink($conn);?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></iframe></div>
+<div class="container d-xxl-flex justify-content-xxl-center"><h1>Region:</h1></div>
+<div class="container d-xxl-flex justify-content-xxl-center"><p class="fs-3"><?php echo getRegion($conn);?></p></div>
 <div class="container d-xxl-flex justify-content-xxl-center"><h1>Description:</h1></div>
-<div class="container d-xxl-flex justify-content-xxl-center"><h2><?php echo getDescription($conn);?></h2></div>
-<div class="container d-xxl-flex justify-content-xxl-center"><h1><?php echo getRegion($conn);?></h1></div>
+<div class="container d-xxl-flex justify-content-xxl-center"><p class="fs-3"><?php echo getDescription($conn);?></p></div>
+
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
