@@ -1,11 +1,10 @@
-<?php   
+<?php  
 // Start session to track user login status
 session_start();
 //Navbar
 include('navbar.php');
 // Database connection
 include('db_connection.php');
-require_once('utility_functions/display_result.php');
 
 // Query to get dance data
 $sql = "SELECT * FROM dances";  // Ensure this matches your table and column names
@@ -74,12 +73,41 @@ $result = $conn->query($sql);
         </div>
 
         <!-- Video Gallery -->
-        <div class="row" id="video-gallery">
+        <div class="row">
             <?php
             // Default video URL if none is provided
             $defaultVideoURL = 'https://youtu.be/vwGp16NXgQU?si=l8Iv3scmhUbsCGpb'; // Your provided default video URL
 
-            displayDanceCard($result,$defaultVideoURL);
+            // Fetch dance videos from the database
+            if ($result->num_rows > 0) {
+                // Output data of each row
+                while ($row = $result->fetch_assoc()) {
+                    // Get the video URL, or set to default if empty
+                    $videoURL = !empty($row['video_url']) ? $row['video_url'] : $defaultVideoURL;
+                    $videoName = $row['name']; // Video name
+                    $videoGenre = $row['genre']; // Genre
+                    $videoRegion = $row['region']; // Region
+                    $videoDescription = $row['description']; // Dance description
+
+                    // Extract YouTube video ID from URL
+                    preg_match('/(?:youtube\.com\/(?:[^\/\n\s]+\/[^\n\s]+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $videoURL, $matches);
+                    $videoID = $matches[1]; // YouTube video ID
+
+                    echo '<div class="col-md-4 mb-4">';
+                    echo '    <div class="card">';
+                    echo '        <iframe width="100%" height="215" src="https://www.youtube.com/embed/' . $videoID . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                    echo '        <div class="card-body">';
+                    echo '            <h5 class="card-title">' . $videoName . '</h5>';
+                    echo '            <p class="card-text">Genre: ' . $videoGenre . '</p>';
+                    echo '            <p class="card-text">Region: ' . $videoRegion . '</p>';
+                    echo '            <p class="card-text"><strong>Description:</strong> ' . $videoDescription . '</p>'; // Added Description
+                    echo '        </div>';
+                    echo '    </div>';
+                    echo '</div>';
+                }
+            } else {
+                echo "<p>No videos available.</p>";
+            }
             ?>
         </div>
     </div>
@@ -144,31 +172,30 @@ $result = $conn->query($sql);
             }
         });
 
-        // Filter Dances by Name, Genre, and Region
-        function filterDances() {
-            var nameSearch = $('#search-name').val().toLowerCase();
-            var genreSearch = $('#search-genre').val().toLowerCase();
-            var regionSearch = $('#search-region').val().toLowerCase();
-
-            $('#video-gallery .video-item').each(function() {
-                var name = $(this).data('name');
-                var genre = $(this).data('genre');
-                var region = $(this).data('region');
-
-                if (name.indexOf(nameSearch) > -1 && genre.indexOf(genreSearch) > -1 && region.indexOf(regionSearch) > -1) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        }
+        // Search function
+        /*function searchDances() {
+            let query = document.getElementById('search-bar').value;
+            if (query) {
+                $.ajax({
+                    type: 'GET',
+                    url: 'search.php',  // Create this PHP file to fetch filtered data
+                    data: { search: query },
+                    success: function(response) {
+                        $('#dance-list').html(response);  // Update the dance table
+                    },
+                    error: function() {
+                        alert('Error occurred while searching');
+                    }
+                });
+            } else {
+                alert('Please enter a search query.');
+            }
+        }*/
     </script>
 
 </body>
 </html>
-<?php
-    include('footer.php');
-    ?>
+
 <?php
 $conn->close();
 ?>

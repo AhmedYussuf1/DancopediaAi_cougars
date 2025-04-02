@@ -1,14 +1,8 @@
 <?php
-ob_start(); // Start output buffering to prevent errors like "Cannot modify header information"
-
-// Start the session to track user login status
-session_start();
+session_start(); // Start the session to track user login status
 
 // Database connection
 include('db_connection.php');
-
-// Navbar
-include('navbar.php');
 
 // Check if the user is an admin
 function is_admin($user_id, $conn) {
@@ -43,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['create_blog'])) {
         $stmt->bind_param("isss", $user_id, $title, $content, $image);
 
         if ($stmt->execute()) {
-            $_SESSION['message'] = "Blog post created successfully!";
+            echo "Blog post created successfully!";
             header("Location: blog.php"); // Redirect to the blog page to show the new post
             exit;
         } else {
@@ -102,7 +96,7 @@ if (isset($_GET['edit']) && isset($_SESSION['user_id'])) {
         $stmt->bind_param("sssi", $new_title, $new_content, $new_image, $post_id);
 
         if ($stmt->execute()) {
-            $_SESSION['message'] = "Blog post updated successfully!";
+            echo "Blog post updated successfully!";
             header("Location: blog.php"); // Redirect to the blog page to avoid re-submitting the form on refresh
             exit;
         } else {
@@ -137,7 +131,7 @@ if (isset($_GET['delete']) && isset($_SESSION['user_id'])) {
         $stmt->bind_param("i", $post_id);
 
         if ($stmt->execute()) {
-            $_SESSION['message'] = "Blog post deleted successfully!";
+            echo "Blog post deleted successfully!";
             header("Location: blog.php"); // Redirect to blog page after deletion
             exit;
         } else {
@@ -154,6 +148,24 @@ if (isset($_GET['delete']) && isset($_SESSION['user_id'])) {
 // Query to fetch all blog posts to display on the page
 $sql = "SELECT posts.id, posts.title, posts.content, posts.image, users.username, posts.user_id FROM posts JOIN users ON posts.user_id = users.user_id ORDER BY posts.created_at DESC";
 $result = $conn->query($sql);
+
+function getTheme() {
+    global $conn;  // Access the global $conn variable
+    if (isset($_SESSION['username'])) {
+        $user_id = $_SESSION['user_id'];
+        $themeQuery = "SELECT theme FROM user_settings WHERE user_id = $user_id";
+        $themeResult = $conn->query($themeQuery);
+        if ($themeResult->num_rows > 0) {
+            $row = $themeResult->fetch_assoc();
+            return $row['theme'];
+        } else {
+            return 1;  // Default theme if no result found
+        }
+    } else {
+        return 1;  // Default theme if user not logged in
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -164,7 +176,15 @@ $result = $conn->query($sql);
     <title>Blog</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <?php include('getTheme.php') ?>
+    <?php
+    $setTheme = getTheme();
+    if($setTheme == 1){
+        echo ' <link href="css/styleLight.css" rel="stylesheet"> ';
+    }
+    elseif ($setTheme == 2){
+        echo ' <link href="css/styleDark.css" rel="stylesheet"> ';
+    }
+    ?>
     <style>
         /* Modal Styles */
         .close {
@@ -183,6 +203,9 @@ $result = $conn->query($sql);
 </head>
 <body>
 
+<!-- Navbar -->
+<?php include('navbar.php'); ?>
+
 <!-- Blog Content -->
 <div class="container-sm">
     <h1 class="text-center">Blog</h1>
@@ -192,14 +215,6 @@ $result = $conn->query($sql);
         <button onclick="document.getElementById('createBlogModal').style.display='block'" class="btn btn-primary mb-4">Create New Blog</button>
     <?php else: ?>
         <p>You must be logged in to create a blog post.</p>
-    <?php endif; ?>
-
-    <!-- Display Success/Error Messages -->
-    <?php if (isset($_SESSION['message'])): ?>
-        <div class="alert alert-success">
-            <?php echo $_SESSION['message']; ?>
-        </div>
-        <?php unset($_SESSION['message']); ?>
     <?php endif; ?>
 
     <!-- Display All Blog Posts -->
@@ -257,9 +272,4 @@ $result = $conn->query($sql);
 </script>
 
 </body>
-<?php include('footer.php'); ?>
 </html>
-
-<?php
-ob_end_flush(); // Flush the output buffer
-?>

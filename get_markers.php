@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 include('db_connection.php'); 
 
 // Query to fetch dance data
-$sql = "SELECT dance_id, name, description, region, image_url, video_url, link, genre, city FROM dances";
+$sql = "SELECT name, description, region, image_url, video_url, link, genre, city FROM dances";
 $result = $conn->query($sql);
 
 $dances = [];
@@ -17,8 +17,7 @@ if ($result->num_rows > 0) {
             "media" => !empty($row["video_url"]) ? $row["video_url"] : $row["image_url"],
             "link" => $row["link"],
             "genre" => $row["genre"],
-            "description" => $row["description"],
-            "id" => $row["dance_id"]
+            "description" => $row["description"]
         ];
     }
 }
