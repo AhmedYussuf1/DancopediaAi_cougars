@@ -80,6 +80,25 @@ function getTitle($conn){
         echo 'No Video Found';
     }
 }
+
+function getGenre($conn){
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['video_id'])) {
+        $videoId = $_GET['video_id'];
+        $sql = "SELECT genre FROM dances WHERE dance_id = $videoId";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row["genre"];
+        }
+        else{
+            echo 'No Video Found';
+        }
+        // Fetch video details from the database using the $videoId
+        // Display video and description
+    } else {
+        echo 'No video ID provided.';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -93,12 +112,30 @@ function getTitle($conn){
     <?php include('getTheme.php');?>
 </head>
 <body>
-<div class="container d-xxl-flex justify-content-xxl-center my-4"><h1><?php echo getTitle($conn);?></h1></div>
+
+<div class="container d-xxl-flex justify-content-xxl-center my-4 text-decoration-underline"><h1><?php echo getTitle($conn);?></h1></div>
 <div class="container d-xxl-flex justify-content-xxl-center mb-4" style="height: 60vh; width: 80vw;"><iframe width="100%" height="100%" src="<?php echo getVideoLink($conn);?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></iframe></div>
-<div class="container d-xxl-flex justify-content-xxl-center"><h1>Region:</h1></div>
-<div class="container d-xxl-flex justify-content-xxl-center"><p class="fs-3"><?php echo getRegion($conn);?></p></div>
-<div class="container d-xxl-flex justify-content-xxl-center"><h1>Description:</h1></div>
-<div class="container d-xxl-flex justify-content-xxl-center"><p class="fs-3"><?php echo getDescription($conn);?></p></div>
+<div class="container d-flex flex-column align-items-center my-4 border border-5 border-dark rounded-5 p-3">
+    <div class="container text-center mb-1">
+        <h1>Genre:</h1>
+    </div>
+    <div class="container text-center mb-3">
+        <p class="fs-3"><?php echo getGenre($conn); ?></p>
+    </div>
+    <div class="container text-center mb-1">
+        <h1>Region:</h1>
+    </div>
+    <div class="container text-center mb-3">
+        <p class="fs-3"><?php echo getRegion($conn); ?></p>
+    </div>
+    <div class="container text-center mb-1">
+        <h1>Description:</h1>
+    </div>
+    <div class="container text-center">
+        <p class="fs-3"><?php echo getDescription($conn); ?></p>
+    </div>
+</div>
+
 
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
