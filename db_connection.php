@@ -4,7 +4,7 @@ $servername = "localhost";
 $username = "root";  // Replace with your DB username
 $password = "";  // Replace with your DB password
 $dbname = "dance_ai_db";  // Replace with your DB name
-$port = 3307;  // Assuming this is your MySQL port for XAMPP
+$port = 3306;  // Assuming this is your MySQL port for XAMPP
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname, $port);

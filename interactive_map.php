@@ -31,6 +31,9 @@ include('navbar.php');
             
         }
 
+        nav.navbar{
+            color: black;
+        }
         .popup-content img, .popup-content video {
             width: 200px; 
             height: auto;
@@ -149,20 +152,17 @@ async function getCoordinates(city) {
                 let coords = await getCoordinates(marker.city);
                      if (coords) {
                         let popupContent = `<div class="card" style="width: 18rem;">
-        ${marker.type === "video" ?
+        ${marker.type === "video" ? 
             (marker.media.includes("youtube.com") || marker.media.includes("youtu.be") ?
                 `<iframe width="100%" height="215" src="https://www.youtube.com/embed/${getYouTubeID(marker.media)}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>` :
                 `<video class="card-img-top" controls><source src="${marker.media}" type="video/mp4"></video>`
-            ) :
+            ) : 
             `<img class="card-img-top" src="${marker.media}" alt="Dance Image">`
         }
         <div class="card-body">
             <h5 class="card-title">${marker.genre}</h5>
             <p class="card-text">${marker.city}</p>
             <p class="card-text">${marker.description}</p>
-            <a href="dance_view.php?video_id=${marker.id}">
-                <button type="button">View Dance</button>
-            </a>
          </div>
     </div>`;
     function getYouTubeID(url) {
@@ -176,11 +176,9 @@ async function getCoordinates(city) {
                 }
             })
             .catch(error => console.error("Error loading markers:", error));
-
+            
     </script>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<?php
-    include('footer.php');
-    ?>
+
 </html>
