@@ -9,10 +9,10 @@ include('db_connection.php');
 $query = isset($_GET['query']) ? $conn->real_escape_string($_GET['query']) : '';
 
 if (!empty($query)) {
-    // Match any record where * contains the query letters or numbers
+    // Retrieve name and dance_id from the dances table in the database
     $sql = "SELECT name, dance_id FROM dances WHERE name LIKE '%$query%'";
 } else {
-    // Optional: Fetch all records if no query is provided
+    // Or else retrieve name from the dances table in the database
     $sql = "SELECT name link FROM dances";
 }
 
@@ -30,4 +30,5 @@ echo json_encode($searchResults);
 
 $conn->close();
 ?>
+
 
