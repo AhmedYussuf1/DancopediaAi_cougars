@@ -59,6 +59,7 @@
                     <div id="search-results" class="dropdown-menu"></div>
                 </li>
 
+
                 <?php if (isset($_SESSION['username'])): ?>
                     <li class="nav-item">
                         <div class="nav-item dropdown show"><a class="dropdown-toggle dropdown_styling" aria-expanded="true" data-bs-toggle="dropdown" href="#"><?php echo $_SESSION['username'] ?></a>
@@ -105,7 +106,7 @@
                     data.forEach(function(item) {
                         const div = document.createElement('a');
                         div.classList.add('dropdown-item'); // Dropdown styling
-                        div.href = item.link; // Link to the dance page
+                        div.href = "dance_view.php?video_id="+item.dance_id; // Link to the dance page
                         div.textContent = item.name; // Display dance name
                         resultsContainer.appendChild(div);
                     });
