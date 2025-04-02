@@ -19,8 +19,8 @@ include('navbar.php');
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/navbar.css">
     <!-- Leaflet CSS & JS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
 
         #map { 
@@ -62,16 +62,15 @@ include('navbar.php');
     
     
     <div id="map"></div>
-    
-    
+
     <script>
   // Initialize the map and set default view
 var map = L.map('map').setView([37.0902, -95.7129], 4); // Centered on the U.S. with zoom level 4
- 
+
 // Add OpenStreetMap tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
-  
+
 }).addTo(map);
 
 // Define the bounding box for the United States (latitude/longitude limits)
@@ -88,8 +87,8 @@ map.setMinZoom(4);
 // Prevent users from panning outside the boundaries
 map.on('drag', function() {
     map.panInsideBounds(usaBounds, { animate: false });
-   
-    
+
+
 });
 /**********************************************************************************************************
  * Function to fetch coordinates from city name using Nominatim API with caching                         *
@@ -104,12 +103,12 @@ async function getCoordinates(city) {
     let url = `https://nominatim.openstreetmap.org/search?format=json&q=${city}`;
 
     /**********************************************************************************************************
-     * The fetch() method is used to request a resource from the network.                                     *       
-     * It returns a promise that resolves to the Response to that request, whether it is successful or not.   *           
+     * The fetch() method is used to request a resource from the network.                                     *
+     * It returns a promise that resolves to the Response to that request, whether it is successful or not.   *
      * You can also opt to return the data in JSON format by calling the json() method on the response.       *
-     * The then() method is used to execute a function after the promise is resolved (or rejected).           *       
-     * The function receives the response from the fetch request.                                             *           
-     * The catch() method is used to handle any errors that may have occurred during the fetch request.       *   
+     * The then() method is used to execute a function after the promise is resolved (or rejected).           *
+     * The function receives the response from the fetch request.                                             *
+     * The catch() method is used to handle any errors that may have occurred during the fetch request.       *
      ***********************************************************************************************************/
 
     return new Promise((resolve, reject) => {
@@ -130,15 +129,15 @@ async function getCoordinates(city) {
                 resolve(null);
             });
     });
-    
+
 }
 
 /************************************************************************************************************
  * The fetch() method is used to request a resource from the network.                                       *
- * It returns a promise that resolves to the Response to that request, whether it is successful or not.     * 
+ * It returns a promise that resolves to the Response to that request, whether it is successful or not.     *
  * You can also opt to return the data in JSON format by calling the json() method on the response.         *
- * The then() method is used to execute a function after the promise is resolved (or rejected).             *       
- * The function receives the response from the fetch request.                                               *             
+ * The then() method is used to execute a function after the promise is resolved (or rejected).             *
+ * The function receives the response from the fetch request.                                               *
  * The catch() method is used to handle any errors that may have occurred during the fetch request.         *
  ************************************************************************************************************/
 
