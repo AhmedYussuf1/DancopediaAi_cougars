@@ -89,7 +89,7 @@
 <script>
 function searchDances() {
     const query = document.getElementById('search-bar').value.trim();
-
+	
     if (query === "") {
         // Hide dropdown if search bar is empty
         document.getElementById('search-results').style.display = 'none';
@@ -106,7 +106,7 @@ function searchDances() {
                 data.forEach(function(item) {
                     const div = document.createElement('a');
                     div.classList.add('dropdown-item'); // Dropdown styling
-                    div.href = item.link; // Link to the dance page
+                    div.href = "dance_view.php?video_id="+item.dance_id; // Link to the dance page
                     div.textContent = item.name; // Display dance name
                     resultsContainer.appendChild(div);
                 });
@@ -120,3 +120,4 @@ function searchDances() {
         .catch(error => console.error('Error fetching search results:', error));
 }
 </script>
+
