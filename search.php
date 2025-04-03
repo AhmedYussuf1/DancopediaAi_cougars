@@ -30,5 +30,3 @@ echo json_encode($searchResults);
 
 $conn->close();
 ?>
-
-
