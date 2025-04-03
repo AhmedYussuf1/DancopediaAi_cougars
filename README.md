@@ -1,6 +1,6 @@
  
  # Description:
-   **name:** Dancopedia_AI\n
+   **name:** Dancopedia_AI
    **What the Project Deos:**:
    
  
